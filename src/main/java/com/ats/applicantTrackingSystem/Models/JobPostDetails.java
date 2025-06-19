@@ -81,10 +81,6 @@ public class JobPostDetails {
         return id;
     }
 
-    public void setId(CompositePrimaryKeyConfig id) {
-        this.id = id;
-    }
-
     public String getJobTitle() {
         return jobTitle;
     }

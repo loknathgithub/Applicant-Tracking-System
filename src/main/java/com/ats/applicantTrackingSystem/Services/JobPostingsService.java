@@ -4,6 +4,7 @@ import com.ats.applicantTrackingSystem.DTO.JobPostingsDTO;
 import com.ats.applicantTrackingSystem.ExceptionHandlers.ResourceNotFoundException;
 import com.ats.applicantTrackingSystem.Models.CompositePrimaryKeyConfig;
 import com.ats.applicantTrackingSystem.Models.JobPostDetails;
+import com.ats.applicantTrackingSystem.Models.JobRoleMatcher;
 import com.ats.applicantTrackingSystem.Repository.JobPostingsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,10 @@ public class JobPostingsService {
 
     @Autowired
     private JobPostingsRepository jobRepo;
+
+
+    @Autowired
+    private JobRoleMatcherService roleService;
 
     //Deletions of Job Postings
     @Transactional
@@ -44,16 +49,22 @@ public class JobPostingsService {
     @Transactional
     public JobPostDetails addJobPosting(JobPostingsDTO job){
         System.out.println("Service: " + job);
-        CompositePrimaryKeyConfig jobID = new CompositePrimaryKeyConfig(job.getJobID(), job.getJobCompanyName());
+        JobPostDetails addJob = getJobPostDetails(job);
 
-        JobPostDetails addJob = new JobPostDetails(jobID, job.getJobTitle(), job.getJobLocation(), job.getJobDescription(),
-                                                    job.getJobQualification(), job.getJobContactMethod(), job.getJobWorkType(),
-                                                    job.getMinSalary(), job.getMaxSalary(), job.getPerks(), job.getSkills(), job.getOptionalSkills(),
-                                                    job.getStartDate(), job.getDeadline());
-
+//        JobRoleMatcher jobRoles = new JobRoleMatcher(jobID, job.getJobTitle(), job.getJobLocation(), job.getJobDescription(),
+//                                                      job.getJobQualification(), job.getSkills(), job.getOptionalSkills());
+//        roleService.addRoleRequirements(jobRoles);
 
         System.out.println("Service: " + addJob);
         return jobRepo.save(addJob);
+    }
+
+    private static JobPostDetails getJobPostDetails(JobPostingsDTO job) {
+        CompositePrimaryKeyConfig jobID = new CompositePrimaryKeyConfig(job.getJobID(), job.getJobCompanyName());
+        return new JobPostDetails(jobID, job.getJobTitle(), job.getJobLocation(), job.getJobDescription(),
+                                                    job.getJobQualification(), job.getJobContactMethod(), job.getJobWorkType(),
+                                                    job.getMinSalary(), job.getMaxSalary(), job.getPerks(), job.getSkills(), job.getOptionalSkills(),
+                                                    job.getStartDate(), job.getDeadline());
     }
 
 
@@ -76,7 +87,7 @@ public class JobPostingsService {
             Map<String, Object> updates) {
 
         System.out.println("Service:  " + updates);
-        CompositePrimaryKeyConfig id = new CompositePrimaryKeyConfig(jobID, companyName);
+        CompositePrimaryKeyConfig id = new CompositePrimaryKeyConfig(jobID, companyName);    //to be checked
         JobPostDetails job = jobRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Job Not Found"));
 

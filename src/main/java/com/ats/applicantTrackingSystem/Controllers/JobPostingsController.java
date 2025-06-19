@@ -5,8 +5,6 @@ import com.ats.applicantTrackingSystem.ExceptionHandlers.ResourceNotFoundExcepti
 import com.ats.applicantTrackingSystem.Models.CompositePrimaryKeyConfig;
 import com.ats.applicantTrackingSystem.Models.JobPostDetails;
 import com.ats.applicantTrackingSystem.Services.JobPostingsService;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,17 +13,13 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 @RestController
 public class JobPostingsController {
 
     @Autowired
-    JobPostingsService jobService;
-
-    @Autowired
-    private ObjectMapper objectMapper;
+    private JobPostingsService jobService;
 
     @PostMapping("/add")
     public ResponseEntity<JobPostDetails> addJob(@RequestBody JobPostingsDTO job){
@@ -39,7 +33,7 @@ public class JobPostingsController {
         }
     }
 
-    @GetMapping("/get/alljobposts")
+    @GetMapping("/get/allJobPosts")
     public ResponseEntity<List<JobPostDetails>> fetchAllJobs(){
         try{
             List<JobPostDetails> allJobs=jobService.fetchAllJobs();
