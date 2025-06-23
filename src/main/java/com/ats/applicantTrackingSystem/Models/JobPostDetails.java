@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
 
 @Entity(name="job_listings")
 public class JobPostDetails {
@@ -29,10 +30,10 @@ public class JobPostDetails {
     private WorkType jobWorkType;
     @NotNull
     @Column(nullable = false)
-    private String[] skills;
+    private List<String> skills;
 
     //optional fields
-    private String[] optionalSkills;  // set limit in pgadmin by adding a check constraint
+    private List<String> optionalSkills;  // set limit in pgadmin by adding a check constraint
     private Integer minSalary;
     private Integer maxSalary;
     private String perks;
@@ -44,7 +45,7 @@ public class JobPostDetails {
 
     public JobPostDetails(CompositePrimaryKeyConfig id, String jobTitle, String jobLocation,
                           String jobDescription, String jobQualification, String jobContactMethod,
-                          WorkType jobWorkType, String[] skills, String[] optionalSkills){
+                          WorkType jobWorkType, List<String> skills, List<String> optionalSkills){
         this.id = id;
         this.jobTitle = jobTitle;
         this.jobLocation = jobLocation;
@@ -58,7 +59,7 @@ public class JobPostDetails {
     public JobPostDetails(CompositePrimaryKeyConfig id, String jobTitle, String jobLocation,
                           String jobDescription, String jobQualification, String jobContactMethod,
                           WorkType jobWorkType, Integer minSalary, Integer maxSalary, String perks,
-                          String[] skills, String[] optionalSkills, String startDate, LocalDate deadline) {
+                          List<String> skills, List<String> optionalSkills, String startDate, LocalDate deadline) {
         this.id = id;
         this.jobTitle = jobTitle;
         this.jobLocation = jobLocation;
@@ -153,19 +154,19 @@ public class JobPostDetails {
         this.perks = perks;
     }
 
-    public String[] getSkills() {
+    public List<String> getSkills() {
         return skills;
     }
 
-    public void setSkills(String[] skills) {
+    public void setSkills(List<String> skills) {
         this.skills = skills;
     }
 
-    public String[] getOptionalSkills() {
+    public List<String> getOptionalSkills() {
         return optionalSkills;
     }
 
-    public void setOptionalSkills(String[] optionalSkills) {
+    public void setOptionalSkills(List<String> optionalSkills) {
         this.optionalSkills = optionalSkills;
     }
 
@@ -195,12 +196,12 @@ public class JobPostDetails {
                 ", jobQualification='" + jobQualification + '\'' +
                 ", jobContactMethod='" + jobContactMethod + '\'' +
                 ", jobWorkType=" + jobWorkType +
-                ", skills=" + Arrays.toString(skills) +
-                ", optionalSkills=" + Arrays.toString(optionalSkills) +
+                ", skills=" + skills +
+                ", optionalSkills=" + optionalSkills +
                 ", minSalary=" + minSalary +
                 ", maxSalary=" + maxSalary +
                 ", perks='" + perks + '\'' +
-                ", startDate=" + startDate +
+                ", startDate='" + startDate + '\'' +
                 ", deadline=" + deadline +
                 '}';
     }

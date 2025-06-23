@@ -4,7 +4,6 @@ import com.ats.applicantTrackingSystem.DTO.JobPostingsDTO;
 import com.ats.applicantTrackingSystem.ExceptionHandlers.ResourceNotFoundException;
 import com.ats.applicantTrackingSystem.Models.CompositePrimaryKeyConfig;
 import com.ats.applicantTrackingSystem.Models.JobPostDetails;
-import com.ats.applicantTrackingSystem.Models.JobRoleMatcher;
 import com.ats.applicantTrackingSystem.Repository.JobPostingsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,10 +49,6 @@ public class JobPostingsService {
     public JobPostDetails addJobPosting(JobPostingsDTO job){
         System.out.println("Service: " + job);
         JobPostDetails addJob = getJobPostDetails(job);
-
-//        JobRoleMatcher jobRoles = new JobRoleMatcher(jobID, job.getJobTitle(), job.getJobLocation(), job.getJobDescription(),
-//                                                      job.getJobQualification(), job.getSkills(), job.getOptionalSkills());
-//        roleService.addRoleRequirements(jobRoles);
 
         System.out.println("Service: " + addJob);
         return jobRepo.save(addJob);

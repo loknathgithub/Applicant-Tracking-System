@@ -3,6 +3,7 @@ import com.ats.applicantTrackingSystem.Models.WorkType;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
 
 public class JobPostingsDTO {
     private String jobID;
@@ -13,8 +14,8 @@ public class JobPostingsDTO {
     private String jobQualification;
     private String jobContactMethod;
     private WorkType jobWorkType;
-    private String[] skills;
-    private String[] optionalSkills=null;
+    private List<String> skills;
+    private List<String> optionalSkills=null;
     private Integer minSalary = null;
     private Integer maxSalary= null;
     private String perks= null;
@@ -25,7 +26,7 @@ public class JobPostingsDTO {
     }
 
     public JobPostingsDTO(String jobID, String jobCompanyName, String jobTitle, String jobLocation,String jobDescription,
-                          String jobQualification, String jobContactMethod, WorkType jobWorkType, String[] skills, String[] optionalSkills) {
+                          String jobQualification, String jobContactMethod, WorkType jobWorkType, List<String> skills, List<String> optionalSkills) {
         this.jobID = jobID;
         this.jobCompanyName = jobCompanyName;
         this.jobTitle = jobTitle;
@@ -40,7 +41,7 @@ public class JobPostingsDTO {
 
     public JobPostingsDTO(String jobID, String jobCompanyName, String jobTitle, String jobLocation,
                           String jobDescription, String jobQualification, String jobContactMethod, WorkType jobWorkType,
-                          String[] skills, String[] optionalSkills, Integer minSalary, Integer maxSalary,
+                          List<String> skills, List<String> optionalSkills, Integer minSalary, Integer maxSalary,
                           String perks, String startDate, LocalDate deadline) {
         this.jobID = jobID;
         this.jobCompanyName = jobCompanyName;
@@ -107,19 +108,19 @@ public class JobPostingsDTO {
         this.jobQualification = jobQualification;
     }
 
-    public String[] getSkills() {
+    public List<String> getSkills() {
         return skills;
     }
 
-    public void setSkills(String[] skills) {
+    public void setSkills(List<String> skills) {
         this.skills = skills;
     }
 
-    public String[] getOptionalSkills() {
+    public List<String> getOptionalSkills() {
         return optionalSkills;
     }
 
-    public void setOptionalSkills(String[] optionalSkills) {
+    public void setOptionalSkills(List<String> optionalSkills) {
         this.optionalSkills = optionalSkills;
     }
 
@@ -181,19 +182,4 @@ public class JobPostingsDTO {
         this.deadline = deadline;
     }
 
-    @Override
-    public String toString() {
-        return "JobPostingsDTO{" +
-                "jobID='" + jobID + '\'' +
-                ", jobCompanyName='" + jobCompanyName + '\'' +
-                ", jobTitle='" + jobTitle + '\'' +
-                ", jobLocation='" + jobLocation + '\'' +
-                ", jobDescription='" + jobDescription + '\'' +
-                ", jobQualification='" + jobQualification + '\'' +
-                ", jobContactMethod='" + jobContactMethod + '\'' +
-                ", jobWorkType=" + jobWorkType +
-                ", skills=" + Arrays.toString(skills) +
-                ", optionalSkills=" + Arrays.toString(optionalSkills) +
-                '}';
-    }
 }

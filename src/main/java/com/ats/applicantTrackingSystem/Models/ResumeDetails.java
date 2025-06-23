@@ -1,47 +1,93 @@
 package com.ats.applicantTrackingSystem.Models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.validation.constraints.NotNull;
-import org.springframework.data.annotation.Id;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import jakarta.persistence.*;
+import java.util.*;
 
 @Entity(name = "resume_details")
 public class ResumeDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String Id;
+    private Long id;
 
-    @NotNull
-    @Column(name = "personal information")
-    private HashMap<String, String> personalInfo;
+    // Personal Information as a Map
+    @ElementCollection
+    @CollectionTable(
+            name = "resume_personal_info",
+            joinColumns = @JoinColumn(name = "resume_id")
+    )
+    @MapKeyColumn(name = "info_key")
+    @Column(name = "info_value")
+    private Map<String, String> personalInfo = new HashMap<>();
 
-    @NotNull
-    private HashSet<String> skills;
+    // Skills as a Set
+    @ElementCollection
+    @CollectionTable(
+            name = "resume_skills",
+            joinColumns = @JoinColumn(name = "resume_id")
+    )
+    @Column(name = "skill")
+    private Set<String> skills = new HashSet<>();
 
-    @NotNull
-    @Column(name = "skill occurrances")
-    private HashMap<String, String> skillsCount;
+    // Skills Count as a Map
+    @ElementCollection
+    @CollectionTable(
+            name = "resume_skill_occurrences",
+            joinColumns = @JoinColumn(name = "resume_id")
+    )
+    @MapKeyColumn(name = "skill")
+    @Column(name = "occurrence")
+    private Map<String, String> skillsCount = new HashMap<>();
 
+    // Experience as a List
+    @ElementCollection
+    @CollectionTable(
+            name = "resume_experience",
+            joinColumns = @JoinColumn(name = "resume_id")
+    )
+    @Column(name = "experience")
     private List<String> experience = new ArrayList<>();
+
+    // Projects as a List
+    @ElementCollection
+    @CollectionTable(
+            name = "resume_projects",
+            joinColumns = @JoinColumn(name = "resume_id")
+    )
+    @Column(name = "project")
     private List<String> projects = new ArrayList<>();
+
+    // Achievements as a List
+    @ElementCollection
+    @CollectionTable(
+            name = "resume_achievements",
+            joinColumns = @JoinColumn(name = "resume_id")
+    )
+    @Column(name = "achievement")
     private List<String> achievements = new ArrayList<>();
+
+    // Certifications as a List
+    @ElementCollection
+    @CollectionTable(
+            name = "resume_certifications",
+            joinColumns = @JoinColumn(name = "resume_id")
+    )
+    @Column(name = "certification")
     private List<String> certifications = new ArrayList<>();
 
-    public ResumeDetails() {
-    }
+    // Default constructor
+    public ResumeDetails() {}
 
-    public ResumeDetails(String id, HashMap<String, String> personalInfo, HashSet<String> skills,
-                         HashMap<String, String> skillsCount, List<String> experience, List<String> projects,
-                         List<String> achievements, List<String> certifications) {
-        Id = id;
+    // All-args constructor (excluding id, which is auto-generated)
+    public ResumeDetails(
+            Map<String, String> personalInfo,
+            Set<String> skills,
+            Map<String, String> skillsCount,
+            List<String> experience,
+            List<String> projects,
+            List<String> achievements,
+            List<String> certifications
+    ) {
         this.personalInfo = personalInfo;
         this.skills = skills;
         this.skillsCount = skillsCount;
@@ -51,35 +97,37 @@ public class ResumeDetails {
         this.certifications = certifications;
     }
 
-    public String getId() {
-        return Id;
+    // Getters and Setters
+
+    public Long getId() {
+        return id;
     }
 
-    public void setId(String id) {
-        Id = id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public HashMap<String, String> getPersonalInfo() {
+    public Map<String, String> getPersonalInfo() {
         return personalInfo;
     }
 
-    public void setPersonalInfo(HashMap<String, String> personalInfo) {
+    public void setPersonalInfo(Map<String, String> personalInfo) {
         this.personalInfo = personalInfo;
     }
 
-    public HashSet<String> getSkills() {
+    public Set<String> getSkills() {
         return skills;
     }
 
-    public void setSkills(HashSet<String> skills) {
+    public void setSkills(Set<String> skills) {
         this.skills = skills;
     }
 
-    public HashMap<String, String> getSkillsCount() {
+    public Map<String, String> getSkillsCount() {
         return skillsCount;
     }
 
-    public void setSkillsCount(HashMap<String, String> skillsCount) {
+    public void setSkillsCount(Map<String, String> skillsCount) {
         this.skillsCount = skillsCount;
     }
 
