@@ -26,7 +26,7 @@ public class JobRoleMatcherService {
                                              HashMap<String, Integer> optSkillsWeights){
 
         CompositePrimaryKeyConfig id = new CompositePrimaryKeyConfig(jobID, companyName);
-        JobPostDetails job = jobRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Job Not Found"));;
+        JobPostDetails job = jobRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Job Not Found"));
 
         JobRoleMatcher weightedJob = new JobRoleMatcher(id,
                                                         job.getJobTitle() ,

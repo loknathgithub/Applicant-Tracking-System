@@ -48,7 +48,7 @@ public class JobPostingsService {
     @Transactional
     public JobPostDetails addJobPosting(JobPostingsDTO job){
         System.out.println("Service: " + job);
-        JobPostDetails addJob = getJobPostDetails(job);
+        JobPostDetails addJob = getJobPostDetails(job);     //mapping dto to 'JobPostDetails' object
 
         System.out.println("Service: " + addJob);
         return jobRepo.save(addJob);

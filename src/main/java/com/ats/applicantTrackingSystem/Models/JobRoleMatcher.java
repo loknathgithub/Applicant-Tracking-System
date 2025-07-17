@@ -3,7 +3,6 @@ package com.ats.applicantTrackingSystem.Models;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.HashMap;
