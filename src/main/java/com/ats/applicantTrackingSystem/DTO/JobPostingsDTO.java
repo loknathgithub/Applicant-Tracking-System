@@ -1,8 +1,7 @@
 package com.ats.applicantTrackingSystem.DTO;
-import com.ats.applicantTrackingSystem.Models.WorkType;
+import com.ats.applicantTrackingSystem.Models.ENUM.WorkType;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 
 public class JobPostingsDTO {

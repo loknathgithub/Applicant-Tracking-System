@@ -1,5 +1,6 @@
 package com.ats.applicantTrackingSystem.Models;
 
+import com.ats.applicantTrackingSystem.Models.ENUM.ApplicationStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -24,15 +25,22 @@ public class Application {
     })
     private JobPostDetails jobPost;    // foreign key
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ApplicationStatus status = ApplicationStatus.SUBMITTED;
+
+
 
     public Application() {
     }
 
-    public Application(Long applicationId, ResumeDetails resume, String coverLetter, int score) {
+    public Application(Long applicationId, ResumeDetails resume, String coverLetter, Integer score, JobPostDetails jobPost, ApplicationStatus status) {
         this.applicationId = applicationId;
         this.resume = resume;
         this.coverLetter = coverLetter;
         this.score = score;
+        this.jobPost = jobPost;
+        this.status = status;
     }
 
     public Long getApplicationId() {
@@ -73,5 +81,13 @@ public class Application {
 
     public void setJobPost(JobPostDetails jobPost) {
         this.jobPost = jobPost;
+    }
+
+    public ApplicationStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ApplicationStatus status) {
+        this.status = status;
     }
 }

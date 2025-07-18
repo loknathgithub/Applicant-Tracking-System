@@ -1,5 +1,6 @@
 package com.ats.applicantTrackingSystem.Models;
 
+import com.ats.applicantTrackingSystem.Models.ENUM.WorkType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
