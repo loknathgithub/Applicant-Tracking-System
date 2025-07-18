@@ -22,10 +22,11 @@ public class JobRoleMatcherService {
     @Transactional
     public JobRoleMatcher skillsWeightMapper(String jobID,
                                              String companyName,
+                                             Long recruiterID,
                                              HashMap<String,Integer> skillsWeights,
                                              HashMap<String, Integer> optSkillsWeights){
 
-        CompositePrimaryKeyConfig id = new CompositePrimaryKeyConfig(jobID, companyName);
+        CompositePrimaryKeyConfig id = new CompositePrimaryKeyConfig(jobID, companyName, recruiterID);
         JobPostDetails job = jobRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Job Not Found"));
 
         JobRoleMatcher weightedJob = new JobRoleMatcher(id,

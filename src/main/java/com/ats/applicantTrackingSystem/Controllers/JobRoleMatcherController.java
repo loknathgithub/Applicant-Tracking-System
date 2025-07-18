@@ -22,10 +22,11 @@ public class JobRoleMatcherController {
     @PostMapping("/add/weights")    // maybe replace: id & companyName to path variable
     public ResponseEntity<JobRoleMatcher> addWeights(@RequestBody String id,
                                                      @RequestBody String companyName,
+                                                     @RequestBody Long recruiterID,
                                                      @RequestBody HashMap<String, Integer> skillsWeights,
                                                      @RequestBody HashMap<String, Integer> optSkillsWeights){
         try {
-            JobRoleMatcher weightedJob = jobRoleService.skillsWeightMapper(id, companyName, skillsWeights, optSkillsWeights);
+            JobRoleMatcher weightedJob = jobRoleService.skillsWeightMapper(id, companyName, recruiterID, skillsWeights, optSkillsWeights);
             return ResponseEntity.status(HttpStatus.OK).body(weightedJob);
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -10,13 +10,16 @@ public class CompositePrimaryKeyConfig implements Serializable {
     private String jobID;
     @Column(nullable = false)
     private String jobCompanyName;
+    @Column(nullable = false)
+    private Long recruiterID;
 
     public CompositePrimaryKeyConfig() {
     }
 
-    public CompositePrimaryKeyConfig(String jobID, String jobCompanyName) {
+    public CompositePrimaryKeyConfig(String jobID, String jobCompanyName, Long recruiterID) {
         this.jobID = jobID;
         this.jobCompanyName = jobCompanyName;
+        this.recruiterID = recruiterID;
     }
 
     public String getJobID() {
@@ -35,15 +38,20 @@ public class CompositePrimaryKeyConfig implements Serializable {
         this.jobCompanyName = jobCompanyName;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        CompositePrimaryKeyConfig that = (CompositePrimaryKeyConfig) o;
-        return Objects.equals(jobID, that.jobID) && Objects.equals(jobCompanyName, that.jobCompanyName);
+    public Long getRecruiterID() {
+        return recruiterID;
+    }
+
+    public void setRecruiterID(Long recruiterID) {
+        this.recruiterID = recruiterID;
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(jobID, jobCompanyName);
+    public String toString() {
+        return "CompositePrimaryKeyConfig{" +
+                "jobID='" + jobID + '\'' +
+                ", jobCompanyName='" + jobCompanyName + '\'' +
+                ", recruiterID='" + recruiterID + '\'' +
+                '}';
     }
 }

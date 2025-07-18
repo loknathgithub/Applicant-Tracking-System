@@ -24,7 +24,7 @@ public class WeightedSearchAlgorithm {
         Map<String, Integer> requiredSkills = new HashMap<>(skills); // concatenated
         requiredSkills.putAll(optSkills);
 
-        int score = matchSkills(requiredSkills, candidateSkills);   // getting score
+        Integer score = matchSkills(requiredSkills, candidateSkills);   // getting score
         application.setScore(score);                                // Update the score
     }
 

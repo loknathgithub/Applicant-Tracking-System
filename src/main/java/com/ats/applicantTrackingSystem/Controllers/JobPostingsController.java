@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/jobs")
 public class JobPostingsController {
 
     @Autowired
@@ -23,10 +24,8 @@ public class JobPostingsController {
 
     @PostMapping("/add")
     public ResponseEntity<JobPostDetails> addJob(@RequestBody JobPostingsDTO job){
-        try{
+        try {
             JobPostDetails fetchedJob = jobService.addJobPosting(job);
-            System.out.println("Controller:  " + job);
-            System.out.println("Controller:  " + fetchedJob);
             return ResponseEntity.status(HttpStatus.CREATED).body(fetchedJob);
         } catch (Exception e) {
             throw new RuntimeException("Error Occurred: " + e);
@@ -35,9 +34,9 @@ public class JobPostingsController {
 
     @GetMapping("/get/allJobPosts")
     public ResponseEntity<List<JobPostDetails>> fetchAllJobs(){
-        try{
-            List<JobPostDetails> allJobs=jobService.fetchAllJobs();
-           return ResponseEntity.status(HttpStatus.ACCEPTED).body(allJobs);
+        try {
+            List<JobPostDetails> allJobs = jobService.fetchAllJobs();
+            return ResponseEntity.status(HttpStatus.OK).body(allJobs);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -45,9 +44,9 @@ public class JobPostingsController {
 
     @DeleteMapping("/deleteAll")
     public ResponseEntity<?> deleteAllJobs(){
-        try{
+        try {
             jobService.deleteAllJobs();
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body("All Jobs are Deleted");
+            return ResponseEntity.status(HttpStatus.OK).body("All Jobs are Deleted");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -55,54 +54,69 @@ public class JobPostingsController {
 
     @DeleteMapping("/delete")
     public ResponseEntity<List<CompositePrimaryKeyConfig>> deleteJobsById(@RequestBody List<CompositePrimaryKeyConfig> ids){
-        try{
+        try {
             jobService.deleteAllJobsByID(ids);
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(ids);
+            return ResponseEntity.status(HttpStatus.OK).body(ids);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    @DeleteMapping("/delete/{companyName}/{jobId}")
-    public ResponseEntity<String> deleteJobById(@PathVariable String companyName, @PathVariable String jobId){
-        try{
-            jobService.deleteJobByID(companyName, jobId);
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Job Delete of id: "+ jobId + " & company: "+ companyName);
-        }
-
-        catch(Exception e){
+    @DeleteMapping("/delete/{companyName}/{jobId}/{recruiterId}")
+    public ResponseEntity<String> deleteJobById(
+            @PathVariable String companyName,
+            @PathVariable String jobId,
+            @PathVariable Long recruiterId
+    ) {
+        try {
+            jobService.deleteJobByID(companyName, jobId, recruiterId);
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body("Job Deleted: " + jobId + ", company: " + companyName + ", recruiter: " + recruiterId);
+        } catch(Exception e) {
             throw new RuntimeException("Error took place:" + e);
         }
     }
 
-    @GetMapping("get/{companyName}/{jobId}")
-    public ResponseEntity<Optional<JobPostDetails>> fetchJobById(@PathVariable String companyName, @PathVariable String jobId){
-        try{
-            return ResponseEntity.status(HttpStatus.FOUND).body(jobService.fetchJobByID(jobId, companyName));
+    @GetMapping("/get/{companyName}/{jobId}/{recruiterId}")
+    public ResponseEntity<Optional<JobPostDetails>> fetchJobById(
+            @PathVariable String companyName,
+            @PathVariable String jobId,
+            @PathVariable Long recruiterId
+    ) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(jobService.fetchJobByID(jobId, companyName, recruiterId));
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error", e);
         }
     }
 
-    @PutMapping("/update/{companyName}/{jobId}")
-    public ResponseEntity<JobPostDetails> updateJobPost(@PathVariable String companyName, @PathVariable String jobId, @RequestBody JobPostDetails updates){
-        try{
-            JobPostDetails updatedJob = jobService.updateJob(jobId, companyName, updates);
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedJob);
+    @PutMapping("/update/{companyName}/{jobId}/{recruiterId}")
+    public ResponseEntity<JobPostDetails> updateJobPost(
+            @PathVariable String companyName,
+            @PathVariable String jobId,
+            @PathVariable Long recruiterId,
+            @RequestBody JobPostDetails updates
+    ) {
+        try {
+            JobPostDetails updatedJob = jobService.updateJob(jobId, companyName, recruiterId, updates);
+            return ResponseEntity.status(HttpStatus.OK).body(updatedJob);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error", e);
         }
     }
 
-    @PatchMapping("/updateDetails/{companyName}/{jobId}")
+    @PatchMapping("/updateDetails/{companyName}/{jobId}/{recruiterId}")
     public ResponseEntity<JobPostDetails> updateJobDetails(
             @PathVariable String companyName,
             @PathVariable String jobId,
-            @RequestBody Map<String, Object> updates) {
+            @PathVariable Long recruiterId,
+            @RequestBody Map<String, Object> updates
+    ) {
         try {
-            Optional<JobPostDetails> updatedJob = jobService.patchJobById(jobId, companyName, updates);
+            Optional<JobPostDetails> updatedJob = jobService.patchJobById(jobId, companyName, recruiterId, updates);
             return updatedJob
-                    .map(job -> ResponseEntity.status(HttpStatus.ACCEPTED).body(job))
+                    .map(job -> ResponseEntity.status(HttpStatus.OK).body(job))
                     .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
         } catch (ResourceNotFoundException e) {
             throw e;
@@ -111,5 +125,5 @@ public class JobPostingsController {
         }
     }
 
-    //Filter and Search Logic
+    // Filter and Search Logic can be added here...
 }

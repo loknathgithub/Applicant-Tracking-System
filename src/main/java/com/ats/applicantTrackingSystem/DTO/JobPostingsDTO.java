@@ -8,6 +8,7 @@ import java.util.List;
 public class JobPostingsDTO {
     private String jobID;
     private String jobCompanyName;
+    private Long recruiterID;
     private String jobTitle;
     private String jobLocation;
     private String jobDescription;
@@ -25,10 +26,11 @@ public class JobPostingsDTO {
     public JobPostingsDTO() {
     }
 
-    public JobPostingsDTO(String jobID, String jobCompanyName, String jobTitle, String jobLocation,String jobDescription,
+    public JobPostingsDTO(String jobID, String jobCompanyName, Long recruiterID, String jobTitle, String jobLocation,String jobDescription,
                           String jobQualification, String jobContactMethod, WorkType jobWorkType, List<String> skills, List<String> optionalSkills) {
         this.jobID = jobID;
         this.jobCompanyName = jobCompanyName;
+        this.recruiterID = recruiterID;
         this.jobTitle = jobTitle;
         this.jobLocation = jobLocation;
         this.jobDescription = jobDescription;
@@ -39,12 +41,13 @@ public class JobPostingsDTO {
         this.optionalSkills=optionalSkills;
     }
 
-    public JobPostingsDTO(String jobID, String jobCompanyName, String jobTitle, String jobLocation,
+    public JobPostingsDTO(String jobID, String jobCompanyName, Long recruiterID, String jobTitle, String jobLocation,
                           String jobDescription, String jobQualification, String jobContactMethod, WorkType jobWorkType,
                           List<String> skills, List<String> optionalSkills, Integer minSalary, Integer maxSalary,
                           String perks, String startDate, LocalDate deadline) {
         this.jobID = jobID;
         this.jobCompanyName = jobCompanyName;
+        this.recruiterID = recruiterID;
         this.jobTitle = jobTitle;
         this.jobLocation = jobLocation;
         this.jobDescription = jobDescription;
@@ -152,6 +155,14 @@ public class JobPostingsDTO {
 
     public Integer getMaxSalary() {
         return maxSalary;
+    }
+
+    public Long getRecruiterID() {
+        return recruiterID;
+    }
+
+    public void setRecruiterID(Long recruiterID) {
+        this.recruiterID = recruiterID;
     }
 
     public void setMaxSalary(Integer maxSalary) {

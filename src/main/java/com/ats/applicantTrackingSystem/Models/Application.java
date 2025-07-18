@@ -1,9 +1,6 @@
 package com.ats.applicantTrackingSystem.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 @Entity(name = "job_application")
@@ -17,7 +14,16 @@ public class Application {
 
     private String coverLetter;
 
-    private int score;
+    private Integer score;
+
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name = "job_id", referencedColumnName = "jobId"),
+            @JoinColumn(name = "company_name", referencedColumnName = "companyName"),
+            @JoinColumn(name = "recruiter_id", referencedColumnName = "recruiterId")
+    })
+    private JobPostDetails jobPost;    // foreign key
+
 
     public Application() {
     }
@@ -53,11 +59,19 @@ public class Application {
         this.coverLetter = coverLetter;
     }
 
-    public int getScore() {
+    public Integer getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(Integer score) {
         this.score = score;
+    }
+
+    public JobPostDetails getJobPost() {
+        return jobPost;
+    }
+
+    public void setJobPost(JobPostDetails jobPost) {
+        this.jobPost = jobPost;
     }
 }

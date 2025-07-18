@@ -21,72 +21,70 @@ public class JobPostingsService {
     @Autowired
     private JobPostingsRepository jobRepo;
 
-
-    @Autowired
-    private JobRoleMatcherService roleService;
-
-    //Deletions of Job Postings
+    // Deletions of Job Postings
     @Transactional
-    public void deleteAllJobs(){
+    public void deleteAllJobs() {
         jobRepo.deleteAll();
     }
 
     @Transactional
-    public void deleteAllJobsByID(List<CompositePrimaryKeyConfig> ids){
+    public void deleteAllJobsByID(List<CompositePrimaryKeyConfig> ids) {
         jobRepo.deleteAllById(ids);
     }
 
     @Transactional
-    public void deleteJobByID(String companyName, String jobId){
-
-        CompositePrimaryKeyConfig id = new CompositePrimaryKeyConfig(jobId, companyName);
+    public void deleteJobByID(String companyName, String jobId, Long recruiterId) {
+        CompositePrimaryKeyConfig id = new CompositePrimaryKeyConfig(jobId, companyName, recruiterId);
         jobRepo.deleteById(id);
     }
 
-
-    //Creation of Job Postings
+    // Creation of Job Postings
     @Transactional
-    public JobPostDetails addJobPosting(JobPostingsDTO job){
+    public JobPostDetails addJobPosting(JobPostingsDTO job) {
         System.out.println("Service: " + job);
-        JobPostDetails addJob = getJobPostDetails(job);     //mapping dto to 'JobPostDetails' object
-
+        JobPostDetails addJob = getJobPostDetails(job); // mapping DTO to JobPostDetails object
         System.out.println("Service: " + addJob);
         return jobRepo.save(addJob);
     }
 
     private static JobPostDetails getJobPostDetails(JobPostingsDTO job) {
-        CompositePrimaryKeyConfig jobID = new CompositePrimaryKeyConfig(job.getJobID(), job.getJobCompanyName());
-        return new JobPostDetails(jobID, job.getJobTitle(), job.getJobLocation(), job.getJobDescription(),
-                                                    job.getJobQualification(), job.getJobContactMethod(), job.getJobWorkType(),
-                                                    job.getMinSalary(), job.getMaxSalary(), job.getPerks(), job.getSkills(), job.getOptionalSkills(),
-                                                    job.getStartDate(), job.getDeadline());
+        CompositePrimaryKeyConfig jobID = new CompositePrimaryKeyConfig(job.getJobID(), job.getJobCompanyName(), job.getRecruiterID());
+        return new JobPostDetails(jobID,
+                job.getJobTitle(),
+                job.getJobLocation(),
+                job.getJobDescription(),
+                job.getJobQualification(),
+                job.getJobContactMethod(),
+                job.getJobWorkType(),
+                job.getMinSalary(),
+                job.getMaxSalary(),
+                job.getPerks(),
+                job.getSkills(),
+                job.getOptionalSkills(),
+                job.getStartDate(),
+                job.getDeadline());
     }
 
-
-    //Fetch Jobs
+    // Fetch Jobs
     @Transactional
-    public List<JobPostDetails> fetchAllJobs(){
+    public List<JobPostDetails> fetchAllJobs() {
         return jobRepo.findAll();
     }
 
     @Transactional
-    public Optional<JobPostDetails> fetchJobByID(String jobID, String companyName){
-        CompositePrimaryKeyConfig id = new CompositePrimaryKeyConfig(jobID, companyName);
+    public Optional<JobPostDetails> fetchJobByID(String jobID, String companyName, Long recruiterId) {
+        CompositePrimaryKeyConfig id = new CompositePrimaryKeyConfig(jobID, companyName, recruiterId);
         return jobRepo.findById(id);
     }
 
     @Transactional
-    public Optional<JobPostDetails> patchJobById(
-            String jobID,
-            String companyName,
-            Map<String, Object> updates) {
-
+    public Optional<JobPostDetails> patchJobById(String jobID, String companyName, Long recruiterId,
+                                                 Map<String, Object> updates) {
         System.out.println("Service:  " + updates);
-        CompositePrimaryKeyConfig id = new CompositePrimaryKeyConfig(jobID, companyName);    //to be checked
+        CompositePrimaryKeyConfig id = new CompositePrimaryKeyConfig(jobID, companyName, recruiterId);
         JobPostDetails job = jobRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Job Not Found"));
 
-        // Use the new utility method
         applyPatchUpdates(job, updates);
 
         JobPostDetails updatedJob = jobRepo.save(job);
@@ -95,8 +93,8 @@ public class JobPostingsService {
     }
 
     @Transactional
-    public JobPostDetails updateJob(String jobID, String companyName, JobPostDetails updatedJobDetails) {
-        CompositePrimaryKeyConfig id = new CompositePrimaryKeyConfig(jobID, companyName);
+    public JobPostDetails updateJob(String jobID, String companyName, Long recruiterId, JobPostDetails updatedJobDetails) {
+        CompositePrimaryKeyConfig id = new CompositePrimaryKeyConfig(jobID, companyName, recruiterId);
 
         JobPostDetails existingJob = jobRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Job Not Found"));
@@ -121,27 +119,20 @@ public class JobPostingsService {
         return jobRepo.save(existingJob);
     }
 
-
-
-    //used by patchJobById
+    // Used by patchJobById - safely apply partial updates
     private void applyPatchUpdates(Object target, Map<String, Object> updates) {
         updates.forEach((fieldName, value) -> {
-            // Skip updating the primary key fields and skip null values
-            if (value == null ||
-                    "id".equals(fieldName) ||
-                    "jobID".equals(fieldName) ||
-                    "jobCompanyName".equals(fieldName)) {
+            // Skip updating primary key fields or nulls
+            if (value == null || "id".equals(fieldName) || "jobID".equals(fieldName)
+                    || "jobCompanyName".equals(fieldName) || "recruiterID".equals(fieldName)) {
                 return;
             }
             Field field = ReflectionUtils.findField(target.getClass(), fieldName);
             if (field != null) {
                 field.setAccessible(true);
-
-                // Handle array fields: convert List to String[] if necessary
                 if (field.getType().isArray() && value instanceof List) {
                     List<?> list = (List<?>) value;
-                    Object array = java.lang.reflect.Array.newInstance(
-                            field.getType().getComponentType(), list.size());
+                    Object array = java.lang.reflect.Array.newInstance(field.getType().getComponentType(), list.size());
                     for (int i = 0; i < list.size(); i++) {
                         java.lang.reflect.Array.set(array, i, list.get(i));
                     }
@@ -153,5 +144,5 @@ public class JobPostingsService {
         });
     }
 
-    //Filter and Search Logic
+    // Filter and Search Logic (Optional) ...
 }
