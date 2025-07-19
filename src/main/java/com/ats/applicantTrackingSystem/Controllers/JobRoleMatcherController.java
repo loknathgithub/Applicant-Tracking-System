@@ -2,8 +2,8 @@ package com.ats.applicantTrackingSystem.Controllers;
 
 import com.ats.applicantTrackingSystem.Models.JobRoleMatcher;
 import com.ats.applicantTrackingSystem.Models.ResumeTemplate.Resume;
-import com.ats.applicantTrackingSystem.Services.JobRoleMatcherService;
-import com.ats.applicantTrackingSystem.Services.PDFMatcherService;
+import com.ats.applicantTrackingSystem.Services.Implementations.JobRoleMatcherService;
+import com.ats.applicantTrackingSystem.Algorithms.PDFMatcherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

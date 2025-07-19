@@ -1,4 +1,4 @@
-package com.ats.applicantTrackingSystem.Services;
+package com.ats.applicantTrackingSystem.Services.Implementations;
 
 import com.ats.applicantTrackingSystem.DTO.JobDashboardDTO;
 import com.ats.applicantTrackingSystem.Models.Application;
@@ -6,6 +6,7 @@ import com.ats.applicantTrackingSystem.Models.ENUM.ApplicationStatus;
 import com.ats.applicantTrackingSystem.Models.JobPostDetails;
 import com.ats.applicantTrackingSystem.Repository.ApplicationRepository;
 import com.ats.applicantTrackingSystem.Repository.JobPostingsRepository;
+import com.ats.applicantTrackingSystem.Services.Interfaces.DashboardServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class DashboardService {
+public class DashboardService implements DashboardServiceImpl {
     @Autowired
     private JobPostingsRepository jobRepo;
 
@@ -26,7 +27,7 @@ public class DashboardService {
         List<JobPostDetails> jobs = jobRepo.findByIdRecruiterId(recruiterId);
         List<JobDashboardDTO> result = new ArrayList<>();
         for (JobPostDetails job : jobs) {
-            List<Application> applications = appRepo.findByJobPost_Id(job.getId());
+            List<Application> applications = appRepo.findByJobPost_Id(job.getId());   //checkpoint
             Map<ApplicationStatus, Long> statusCount = applications.stream()
                     .collect(Collectors.groupingBy(Application::getStatus, Collectors.counting()));
             result.add(new JobDashboardDTO(job, applications.size(), statusCount));

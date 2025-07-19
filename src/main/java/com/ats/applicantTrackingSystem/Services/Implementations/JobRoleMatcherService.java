@@ -1,4 +1,4 @@
-package com.ats.applicantTrackingSystem.Services;
+package com.ats.applicantTrackingSystem.Services.Implementations;
 
 import com.ats.applicantTrackingSystem.ExceptionHandlers.ResourceNotFoundException;
 import com.ats.applicantTrackingSystem.Models.CompositePrimaryKeyConfig;
@@ -6,13 +6,14 @@ import com.ats.applicantTrackingSystem.Models.JobPostDetails;
 import com.ats.applicantTrackingSystem.Models.JobRoleMatcher;
 import com.ats.applicantTrackingSystem.Repository.JobPostingsRepository;
 import com.ats.applicantTrackingSystem.Repository.JobRoleMatcherRepository;
+import com.ats.applicantTrackingSystem.Services.Interfaces.JobRoleMatcherServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 
 @Service
-public class JobRoleMatcherService {
+public class JobRoleMatcherService implements JobRoleMatcherServiceImpl {
     @Autowired
     private JobRoleMatcherRepository matchRepo;
 

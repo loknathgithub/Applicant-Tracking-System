@@ -1,4 +1,4 @@
-package com.ats.applicantTrackingSystem.Services;
+package com.ats.applicantTrackingSystem.Algorithms;
 
 import com.ats.applicantTrackingSystem.ExceptionHandlers.ResourceNotFoundException;
 import com.ats.applicantTrackingSystem.Models.*;

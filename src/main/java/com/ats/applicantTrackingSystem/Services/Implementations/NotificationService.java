@@ -1,7 +1,8 @@
-package com.ats.applicantTrackingSystem.Services;
+package com.ats.applicantTrackingSystem.Services.Implementations;
 
 import com.ats.applicantTrackingSystem.Models.Notification;
 import com.ats.applicantTrackingSystem.Repository.NotificationRepository;
+import com.ats.applicantTrackingSystem.Services.Interfaces.NotificationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class NotificationService {
+public class NotificationService implements NotificationServiceImpl {
     @Autowired
     private NotificationRepository repo;
 
@@ -27,4 +28,3 @@ public class NotificationService {
         repo.save(n);
     }
 }
-

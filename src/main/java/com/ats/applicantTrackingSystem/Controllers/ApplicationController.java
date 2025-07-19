@@ -3,7 +3,7 @@ package com.ats.applicantTrackingSystem.Controllers;
 import com.ats.applicantTrackingSystem.DTO.ApplicationDTO;
 import com.ats.applicantTrackingSystem.Models.Application;
 import com.ats.applicantTrackingSystem.Models.ENUM.ApplicationStatus;
-import com.ats.applicantTrackingSystem.Services.ApplicationService;
+import com.ats.applicantTrackingSystem.Services.Implementations.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

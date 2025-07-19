@@ -1,10 +1,11 @@
-package com.ats.applicantTrackingSystem.Services;
+package com.ats.applicantTrackingSystem.Services.Implementations;
 
 import com.ats.applicantTrackingSystem.DTO.JobPostingsDTO;
 import com.ats.applicantTrackingSystem.ExceptionHandlers.ResourceNotFoundException;
 import com.ats.applicantTrackingSystem.Models.CompositePrimaryKeyConfig;
 import com.ats.applicantTrackingSystem.Models.JobPostDetails;
 import com.ats.applicantTrackingSystem.Repository.JobPostingsRepository;
+import com.ats.applicantTrackingSystem.Services.Interfaces.JobPostingsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +17,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-public class JobPostingsService {
+public class JobPostingsService implements JobPostingsServiceImpl {
 
     @Autowired
     private JobPostingsRepository jobRepo;
@@ -47,7 +48,7 @@ public class JobPostingsService {
         return jobRepo.save(addJob);
     }
 
-    private static JobPostDetails getJobPostDetails(JobPostingsDTO job) {
+    public JobPostDetails getJobPostDetails(JobPostingsDTO job) {
         CompositePrimaryKeyConfig jobID = new CompositePrimaryKeyConfig(job.getJobID(), job.getJobCompanyName(), job.getRecruiterID());
         return new JobPostDetails(jobID,
                 job.getJobTitle(),
@@ -120,7 +121,7 @@ public class JobPostingsService {
     }
 
     // Used by patchJobById - safely apply partial updates
-    private void applyPatchUpdates(Object target, Map<String, Object> updates) {
+    public void applyPatchUpdates(Object target, Map<String, Object> updates) {
         updates.forEach((fieldName, value) -> {
             // Skip updating primary key fields or nulls
             if (value == null || "id".equals(fieldName) || "jobID".equals(fieldName)

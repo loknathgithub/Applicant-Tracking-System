@@ -1,7 +1,7 @@
 package com.ats.applicantTrackingSystem.Controllers;
 
 import com.ats.applicantTrackingSystem.DTO.CandidateJobDTO;
-import com.ats.applicantTrackingSystem.Services.CandidateDashboardService;
+import com.ats.applicantTrackingSystem.Services.Implementations.CandidateDashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +17,7 @@ public class CandidateDashboardController {
     @Autowired
     private CandidateDashboardService dashboardService;
 
+    // List of applied jobs
     @GetMapping("/candidate/{userId}")
     public ResponseEntity<List<CandidateJobDTO>> getCandidateDashboard(@PathVariable Long userId) {
         return ResponseEntity.ok(dashboardService.getCandidateDashboard(userId));

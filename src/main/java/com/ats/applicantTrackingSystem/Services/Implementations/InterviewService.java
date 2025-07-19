@@ -1,4 +1,4 @@
-package com.ats.applicantTrackingSystem.Services;
+package com.ats.applicantTrackingSystem.Services.Implementations;
 
 import com.ats.applicantTrackingSystem.DTO.InterviewDTO;
 import com.ats.applicantTrackingSystem.Models.Application;
@@ -8,13 +8,14 @@ import com.ats.applicantTrackingSystem.Models.JobPostDetails;
 import com.ats.applicantTrackingSystem.Repository.ApplicationRepository;
 import com.ats.applicantTrackingSystem.Repository.InterviewRepository;
 import com.ats.applicantTrackingSystem.Repository.JobPostingsRepository;
+import com.ats.applicantTrackingSystem.Services.Interfaces.InterviewServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class InterviewService {
+public class InterviewService implements InterviewServiceImpl {
     @Autowired
     private InterviewRepository interviewRepo;
     @Autowired

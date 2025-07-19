@@ -1,4 +1,4 @@
-package com.ats.applicantTrackingSystem.Services;
+package com.ats.applicantTrackingSystem.Services.Implementations;
 
 import com.ats.applicantTrackingSystem.DTO.ApplicationDTO;
 import com.ats.applicantTrackingSystem.ExceptionHandlers.ResourceNotFoundException;
@@ -7,11 +7,12 @@ import com.ats.applicantTrackingSystem.Models.ENUM.ApplicationStatus;
 import com.ats.applicantTrackingSystem.Repository.ApplicationRepository;
 import com.ats.applicantTrackingSystem.Repository.JobPostingsRepository;
 import com.ats.applicantTrackingSystem.Repository.ResumeDetailsRepository;
+import com.ats.applicantTrackingSystem.Services.Interfaces.ApplicationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ApplicationService {
+public class ApplicationService implements ApplicationServiceImpl {
 
     @Autowired
     private ApplicationRepository applicationRepository;
@@ -32,7 +33,7 @@ public class ApplicationService {
         JobPostDetails job = jobPostingsRepository.findById(jobKey)
                 .orElseThrow(() -> new RuntimeException("Job posting not found"));
 
-        ResumeDetails resume = resumeDetailsRepository.findById(dto.getResumeId())
+        ResumeDetails resume = resumeDetailsRepository.findById(dto.getResumeId())   // checkpoint: finding resume in storage
                 .orElseThrow(() -> new RuntimeException("Resume not found"));
 
         // 3. Create and populate Application entity
@@ -40,7 +41,7 @@ public class ApplicationService {
         app.setJobPost(job);
         app.setResume(resume);
         app.setCoverLetter(dto.getCoverLetter());
-        // Optionally: app.setScore(...) if needed
+        // Optionally: app.setScore(...)
 
         // 4. Persist new application
         return applicationRepository.save(app);

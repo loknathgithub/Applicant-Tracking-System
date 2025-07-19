@@ -1,10 +1,11 @@
-package com.ats.applicantTrackingSystem.Services;
+package com.ats.applicantTrackingSystem.Services.Implementations;
 
 import com.ats.applicantTrackingSystem.DTO.CandidateJobDTO;
 import com.ats.applicantTrackingSystem.Models.Interview;
 import com.ats.applicantTrackingSystem.Repository.InterviewRepository;
 import com.ats.applicantTrackingSystem.Models.Application;
 import com.ats.applicantTrackingSystem.Repository.ApplicationRepository;
+import com.ats.applicantTrackingSystem.Services.Interfaces.CandidateDashboardServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class CandidateDashboardService {
+public class CandidateDashboardService implements CandidateDashboardServiceImpl {
     @Autowired
     private ApplicationRepository appRepo;
 

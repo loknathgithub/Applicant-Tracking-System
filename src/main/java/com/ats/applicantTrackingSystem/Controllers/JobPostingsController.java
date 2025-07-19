@@ -4,7 +4,7 @@ import com.ats.applicantTrackingSystem.DTO.JobPostingsDTO;
 import com.ats.applicantTrackingSystem.ExceptionHandlers.ResourceNotFoundException;
 import com.ats.applicantTrackingSystem.Models.CompositePrimaryKeyConfig;
 import com.ats.applicantTrackingSystem.Models.JobPostDetails;
-import com.ats.applicantTrackingSystem.Services.JobPostingsService;
+import com.ats.applicantTrackingSystem.Services.Implementations.JobPostingsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

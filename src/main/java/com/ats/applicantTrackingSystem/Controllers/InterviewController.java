@@ -2,7 +2,7 @@ package com.ats.applicantTrackingSystem.Controllers;
 
 import com.ats.applicantTrackingSystem.DTO.InterviewDTO;
 import com.ats.applicantTrackingSystem.Models.Interview;
-import com.ats.applicantTrackingSystem.Services.InterviewService;
+import com.ats.applicantTrackingSystem.Services.Implementations.InterviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

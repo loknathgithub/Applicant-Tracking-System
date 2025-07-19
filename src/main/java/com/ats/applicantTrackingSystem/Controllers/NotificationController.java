@@ -1,7 +1,7 @@
 package com.ats.applicantTrackingSystem.Controllers;
 
 import com.ats.applicantTrackingSystem.Models.Notification;
-import com.ats.applicantTrackingSystem.Services.NotificationService;
+import com.ats.applicantTrackingSystem.Services.Implementations.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
