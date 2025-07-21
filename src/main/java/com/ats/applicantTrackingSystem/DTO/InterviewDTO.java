@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 public class InterviewDTO {
     private String jobId;
-    private String companyName;
+    private String jobCompanyName;
     private Long recruiterId;
     private Long applicationId;
     private LocalDateTime scheduledTime;
@@ -17,10 +17,10 @@ public class InterviewDTO {
     public InterviewDTO(){
     }
 
-    public InterviewDTO(String jobId, String companyName, Long recruiterId, Long applicationId,
+    public InterviewDTO(String jobId, String jobCompanyName, Long recruiterId, Long applicationId,
                         LocalDateTime scheduledTime, String interviewer, String notes, InterviewStatus status) {
         this.jobId = jobId;
-        this.companyName = companyName;
+        this.jobCompanyName = jobCompanyName;
         this.recruiterId = recruiterId;
         this.applicationId = applicationId;
         this.scheduledTime = scheduledTime;
@@ -37,12 +37,12 @@ public class InterviewDTO {
         this.jobId = jobId;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public String getJobCompanyName() {
+        return jobCompanyName;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setCompanyName(String jobCompanyName) {
+        this.jobCompanyName = jobCompanyName;
     }
 
     public Long getRecruiterId() {

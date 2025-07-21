@@ -34,8 +34,8 @@ public class JobPostingsService implements JobPostingsServiceImpl {
     }
 
     @Transactional
-    public void deleteJobByID(String companyName, String jobId, Long recruiterId) {
-        CompositePrimaryKeyConfig id = new CompositePrimaryKeyConfig(jobId, companyName, recruiterId);
+    public void deleteJobByID(String jobCompanyName, String jobId, Long recruiterId) {
+        CompositePrimaryKeyConfig id = new CompositePrimaryKeyConfig(jobId, jobCompanyName, recruiterId);
         jobRepo.deleteById(id);
     }
 
@@ -73,16 +73,16 @@ public class JobPostingsService implements JobPostingsServiceImpl {
     }
 
     @Transactional
-    public Optional<JobPostDetails> fetchJobByID(String jobID, String companyName, Long recruiterId) {
-        CompositePrimaryKeyConfig id = new CompositePrimaryKeyConfig(jobID, companyName, recruiterId);
+    public Optional<JobPostDetails> fetchJobByID(String jobID, String jobCompanyName, Long recruiterId) {
+        CompositePrimaryKeyConfig id = new CompositePrimaryKeyConfig(jobID, jobCompanyName, recruiterId);
         return jobRepo.findById(id);
     }
 
     @Transactional
-    public Optional<JobPostDetails> patchJobById(String jobID, String companyName, Long recruiterId,
+    public Optional<JobPostDetails> patchJobById(String jobID, String jobCompanyName, Long recruiterId,
                                                  Map<String, Object> updates) {
         System.out.println("Service:  " + updates);
-        CompositePrimaryKeyConfig id = new CompositePrimaryKeyConfig(jobID, companyName, recruiterId);
+        CompositePrimaryKeyConfig id = new CompositePrimaryKeyConfig(jobID, jobCompanyName, recruiterId);
         JobPostDetails job = jobRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Job Not Found"));
 
@@ -94,8 +94,8 @@ public class JobPostingsService implements JobPostingsServiceImpl {
     }
 
     @Transactional
-    public JobPostDetails updateJob(String jobID, String companyName, Long recruiterId, JobPostDetails updatedJobDetails) {
-        CompositePrimaryKeyConfig id = new CompositePrimaryKeyConfig(jobID, companyName, recruiterId);
+    public JobPostDetails updateJob(String jobID, String jobCompanyName, Long recruiterId, JobPostDetails updatedJobDetails) {
+        CompositePrimaryKeyConfig id = new CompositePrimaryKeyConfig(jobID, jobCompanyName, recruiterId);
 
         JobPostDetails existingJob = jobRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Job Not Found"));

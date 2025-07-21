@@ -21,12 +21,12 @@ public class JobRoleMatcherController {
 
     @PostMapping("/add/weights")    // maybe replace: id & companyName to path variable
     public ResponseEntity<JobRoleMatcher> addWeights(@RequestBody String id,
-                                                     @RequestBody String companyName,
+                                                     @RequestBody String jobCompanyName,
                                                      @RequestBody Long recruiterID,
                                                      @RequestBody HashMap<String, Integer> skillsWeights,
                                                      @RequestBody HashMap<String, Integer> optSkillsWeights){
         try {
-            JobRoleMatcher weightedJob = jobRoleService.skillsWeightMapper(id, companyName, recruiterID, skillsWeights, optSkillsWeights);
+            JobRoleMatcher weightedJob = jobRoleService.skillsWeightMapper(id, jobCompanyName, recruiterID, skillsWeights, optSkillsWeights);
             return ResponseEntity.status(HttpStatus.OK).body(weightedJob);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -34,11 +34,18 @@ public class JobRoleMatcherController {
     }
 
     @PostMapping("/pdftest")
-    public ResponseEntity<Resume> pdfParsing(@RequestParam String pdfURL){    //change URL to take origin PDF or alternative
+    public ResponseEntity<Resume> pdfParsing(@RequestParam String pdfURL){
         try{
-            return ResponseEntity.status(HttpStatus.OK).body(pdfMatcherService.parseResume(pdfURL));
+            Resume resume;
+            if (pdfURL.startsWith("http://") || pdfURL.startsWith("https://")) {
+                resume = pdfMatcherService.parseResumeFromUrl(pdfURL);
+            } else {
+                resume = pdfMatcherService.parseResume(pdfURL);
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(resume);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
 }

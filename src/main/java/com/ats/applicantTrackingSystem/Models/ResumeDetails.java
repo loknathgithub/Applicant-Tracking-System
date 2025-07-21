@@ -54,19 +54,17 @@ public class ResumeDetails {
     @Column(name = "certification")
     private List<String> certifications = new ArrayList<>();
 
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
+
 
     public ResumeDetails() {
     }
 
-    public ResumeDetails(
-            Map<String, String> personalInfo,
-            Set<String> skills,
-            Map<String, String> skillsCount,
-            List<String> experience,
-            List<String> projects,
-            List<String> achievements,
-            List<String> certifications
-    ) {
+    public ResumeDetails(Long id, Map<String, String> personalInfo, Set<String> skills,
+                         Map<String, String> skillsCount, List<String> experience, List<String> projects,
+                         List<String> achievements, List<String> certifications, Long userId) {
+        this.id = id;
         this.personalInfo = personalInfo;
         this.skills = skills;
         this.skillsCount = skillsCount;
@@ -74,6 +72,7 @@ public class ResumeDetails {
         this.projects = projects;
         this.achievements = achievements;
         this.certifications = certifications;
+        this.userId = userId;
     }
 
     // --- Getters & Setters ---
@@ -101,4 +100,12 @@ public class ResumeDetails {
 
     public List<String> getCertifications() { return certifications; }
     public void setCertifications(List<String> certifications) { this.certifications = certifications; }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 }

@@ -11,6 +11,8 @@ public class Application {
     private Long applicationId;
 
     @NotNull
+    @ManyToOne
+    @JoinColumn(name = "resume_id", referencedColumnName = "id")
     private ResumeDetails resume;
 
     private String coverLetter;
@@ -20,7 +22,7 @@ public class Application {
     @ManyToOne
     @JoinColumns({
             @JoinColumn(name = "job_id", referencedColumnName = "jobId"),
-            @JoinColumn(name = "company_name", referencedColumnName = "companyName"),
+            @JoinColumn(name = "company_name", referencedColumnName = "jobCompanyName"),
             @JoinColumn(name = "recruiter_id", referencedColumnName = "recruiterId")
     })
     private JobPostDetails jobPost;    // foreign key

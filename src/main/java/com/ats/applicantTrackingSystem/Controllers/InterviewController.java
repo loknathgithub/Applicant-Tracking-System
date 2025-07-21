@@ -37,10 +37,10 @@ public class InterviewController {
             @RequestParam(required = false) Long recruiterId,
             @RequestParam(required = false) Long applicationId,
             @RequestParam(required = false) String jobId,
-            @RequestParam(required = false) String companyName
+            @RequestParam(required = false) String jobCompanyName
     ) {
-        if (jobId != null && companyName != null && recruiterId != null) {
-            return ResponseEntity.ok(interviewService.getInterviewsByJob(jobId, companyName, recruiterId));
+        if (jobId != null && jobCompanyName != null && recruiterId != null) {
+            return ResponseEntity.ok(interviewService.getInterviewsByJob(jobId, jobCompanyName, recruiterId));
         } else if (recruiterId != null) {
             return ResponseEntity.ok(interviewService.getInterviewsByRecruiter(recruiterId));
         } else if (applicationId != null) {

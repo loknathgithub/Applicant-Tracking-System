@@ -1,6 +1,9 @@
 package com.ats.applicantTrackingSystem.Models;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.NotNull;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -8,18 +11,20 @@ import java.util.Objects;
 public class CompositePrimaryKeyConfig implements Serializable {
     @Column(nullable = false)
     private String jobID;
+
     @Column(nullable = false)
     private String jobCompanyName;
+
     @Column(nullable = false)
-    private Long recruiterID;
+    private Long recruiterId;
 
     public CompositePrimaryKeyConfig() {
     }
 
-    public CompositePrimaryKeyConfig(String jobID, String jobCompanyName, Long recruiterID) {
+    public CompositePrimaryKeyConfig(String jobID, String jobCompanyName, Long recruiterId) {
         this.jobID = jobID;
         this.jobCompanyName = jobCompanyName;
-        this.recruiterID = recruiterID;
+        this.recruiterId = recruiterId;
     }
 
     public String getJobID() {
@@ -38,12 +43,27 @@ public class CompositePrimaryKeyConfig implements Serializable {
         this.jobCompanyName = jobCompanyName;
     }
 
-    public Long getRecruiterID() {
-        return recruiterID;
+    public Long getRecruiterId() {
+        return recruiterId;
     }
 
-    public void setRecruiterID(Long recruiterID) {
-        this.recruiterID = recruiterID;
+    public void setRecruiterId(Long recruiterId) {
+        this.recruiterId = recruiterId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CompositePrimaryKeyConfig)) return false;
+        CompositePrimaryKeyConfig that = (CompositePrimaryKeyConfig) o;
+        return Objects.equals(jobID, that.jobID)
+                && Objects.equals(jobCompanyName, that.jobCompanyName)
+                && Objects.equals(recruiterId, that.recruiterId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(jobID, jobCompanyName, recruiterId);
     }
 
     @Override
@@ -51,7 +71,7 @@ public class CompositePrimaryKeyConfig implements Serializable {
         return "CompositePrimaryKeyConfig{" +
                 "jobID='" + jobID + '\'' +
                 ", jobCompanyName='" + jobCompanyName + '\'' +
-                ", recruiterID='" + recruiterID + '\'' +
+                ", recruiterId=" + recruiterId +
                 '}';
     }
 }

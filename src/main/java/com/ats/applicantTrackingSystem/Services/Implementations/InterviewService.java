@@ -24,7 +24,7 @@ public class InterviewService implements InterviewServiceImpl {
     private ApplicationRepository appRepo;
 
     public Interview createInterview(InterviewDTO dto) {
-        CompositePrimaryKeyConfig jobKey = new CompositePrimaryKeyConfig(dto.getJobId(), dto.getCompanyName(), dto.getRecruiterId());
+        CompositePrimaryKeyConfig jobKey = new CompositePrimaryKeyConfig(dto.getJobId(), dto.getJobCompanyName(), dto.getRecruiterId());
         JobPostDetails job = jobRepo.findById(jobKey).orElseThrow();
         Application app = appRepo.findById(dto.getApplicationId()).orElseThrow();
 
@@ -57,11 +57,11 @@ public class InterviewService implements InterviewServiceImpl {
         return interviewRepo.findByJob_Id_RecruiterId(recruiterId);
     }
 
-    public List<Interview> getInterviewsByJob(String jobId, String companyName, Long recruiterId) {
-        return interviewRepo.findByJob_Id_JobIdAndJob_Id_CompanyNameAndJob_Id_RecruiterId(jobId, companyName, recruiterId);
+    public List<Interview> getInterviewsByJob(String jobId, String jobCompanyName, Long recruiterId) {
+        return interviewRepo.findByJob_Id_JobIDAndJob_Id_JobCompanyNameAndJob_Id_RecruiterId(jobId, jobCompanyName, recruiterId);
     }
 
     public List<Interview> getInterviewsByCandidate(Long applicationId) {
-        return interviewRepo.findByApplication_Id(applicationId);
+        return interviewRepo.findByApplication_ApplicationId(applicationId);
     }
 }

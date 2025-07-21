@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public interface JobRoleMatcherServiceImpl {
     public JobRoleMatcher skillsWeightMapper(String jobID,
-                                             String companyName,
+                                             String jobCompanyName,
                                              Long recruiterID,
                                              HashMap<String,Integer> skillsWeights,
                                              HashMap<String, Integer> optSkillsWeights);

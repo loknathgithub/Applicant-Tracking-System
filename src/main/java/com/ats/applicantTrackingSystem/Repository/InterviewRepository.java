@@ -12,10 +12,10 @@ public interface InterviewRepository extends JpaRepository<Interview, Long> {
     List<Interview> findByJob_Id_RecruiterId(Long recruiterId);
 
     // Find all interviews for a specific job
-    List<Interview> findByJob_Id_JobIdAndJob_Id_CompanyNameAndJob_Id_RecruiterId(String jobId, String companyName, Long recruiterId);
+    List<Interview> findByJob_Id_JobIDAndJob_Id_JobCompanyNameAndJob_Id_RecruiterId(String jobID, String jobCompanyName, Long recruiterId);
 
     // Find all interviews for a candidate/application
-    List<Interview> findByApplication_Id(Long applicationId);
+    List<Interview> findByApplication_ApplicationId(Long applicationId);
 
     List<Interview> findByApplication_Resume_UserId(Long userId);
 }

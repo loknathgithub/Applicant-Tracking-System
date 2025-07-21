@@ -36,7 +36,7 @@ public class CandidateDashboardService implements CandidateDashboardServiceImpl 
                     interviewsByAppId.getOrDefault(app.getApplicationId(), Collections.emptyList())
             ));
         }
-        return result;
+        return null;
     }
 }
 

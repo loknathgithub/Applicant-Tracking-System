@@ -62,59 +62,59 @@ public class JobPostingsController {
         }
     }
 
-    @DeleteMapping("/delete/{companyName}/{jobId}/{recruiterId}")
+    @DeleteMapping("/delete/{jobCompanyName}/{jobId}/{recruiterId}")
     public ResponseEntity<String> deleteJobById(
-            @PathVariable String companyName,
+            @PathVariable String jobCompanyName,
             @PathVariable String jobId,
             @PathVariable Long recruiterId
     ) {
         try {
-            jobService.deleteJobByID(companyName, jobId, recruiterId);
+            jobService.deleteJobByID(jobCompanyName, jobId, recruiterId);
             return ResponseEntity.status(HttpStatus.OK)
-                    .body("Job Deleted: " + jobId + ", company: " + companyName + ", recruiter: " + recruiterId);
+                    .body("Job Deleted: " + jobId + ", company: " + jobCompanyName + ", recruiter: " + recruiterId);
         } catch(Exception e) {
             throw new RuntimeException("Error took place:" + e);
         }
     }
 
-    @GetMapping("/get/{companyName}/{jobId}/{recruiterId}")
+    @GetMapping("/get/{jobCompanyName}/{jobId}/{recruiterId}")
     public ResponseEntity<Optional<JobPostDetails>> fetchJobById(
-            @PathVariable String companyName,
+            @PathVariable String jobCompanyName,
             @PathVariable String jobId,
             @PathVariable Long recruiterId
     ) {
         try {
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(jobService.fetchJobByID(jobId, companyName, recruiterId));
+                    .body(jobService.fetchJobByID(jobId, jobCompanyName, recruiterId));
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error", e);
         }
     }
 
-    @PutMapping("/update/{companyName}/{jobId}/{recruiterId}")
+    @PutMapping("/update/{jobCompanyName}/{jobId}/{recruiterId}")
     public ResponseEntity<JobPostDetails> updateJobPost(
-            @PathVariable String companyName,
+            @PathVariable String jobCompanyName,
             @PathVariable String jobId,
             @PathVariable Long recruiterId,
             @RequestBody JobPostDetails updates
     ) {
         try {
-            JobPostDetails updatedJob = jobService.updateJob(jobId, companyName, recruiterId, updates);
+            JobPostDetails updatedJob = jobService.updateJob(jobId, jobCompanyName, recruiterId, updates);
             return ResponseEntity.status(HttpStatus.OK).body(updatedJob);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error", e);
         }
     }
 
-    @PatchMapping("/updateDetails/{companyName}/{jobId}/{recruiterId}")
+    @PatchMapping("/updateDetails/{jobCompanyName}/{jobId}/{recruiterId}")
     public ResponseEntity<JobPostDetails> updateJobDetails(
-            @PathVariable String companyName,
+            @PathVariable String jobCompanyName,
             @PathVariable String jobId,
             @PathVariable Long recruiterId,
             @RequestBody Map<String, Object> updates
     ) {
         try {
-            Optional<JobPostDetails> updatedJob = jobService.patchJobById(jobId, companyName, recruiterId, updates);
+            Optional<JobPostDetails> updatedJob = jobService.patchJobById(jobId, jobCompanyName, recruiterId, updates);
             return updatedJob
                     .map(job -> ResponseEntity.status(HttpStatus.OK).body(job))
                     .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
